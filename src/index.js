@@ -16,11 +16,11 @@ import Cart from './components/cart/cart';
 import Page404 from './components/page-404/page-404';
 import store from './store';
 
+// eslint-disable-next-line no-undef
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   // eslint-disable-next-line react/jsx-filename-extension
   <Provider store={store}>
-    {console.log('Render all: ', store.getState())}
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />}>

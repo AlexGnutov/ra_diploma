@@ -6,6 +6,11 @@ import CartContentItem from './cart-content-item';
 function CartContent() {
   const { goods } = useSelector((state) => state.cart);
 
+  const calcTotal = (items) => (
+    items.reduce((acc, current) => (
+      acc + current.item.price * current.selectedQuantity), 0)
+  );
+
   return (
     <section className="cart">
       <h2 className="text-center">Корзина</h2>
@@ -35,11 +40,7 @@ function CartContent() {
           <tr>
             <td colSpan="5" className="text-right">Общая стоимость</td>
             <td>
-              { goods.length > 0
-                ? goods
-                  .reduce((acc, current) => (
-                    acc + current.item.price * current.selectedQuantity), 0)
-                : 0 }
+              { goods.length > 0 ? calcTotal(goods) : 0 }
               {' '}
               руб.
             </td>

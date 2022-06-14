@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { getAction } from '../../../store/epics';
 
@@ -17,7 +18,7 @@ function CartContentItem(props) {
     <>
       {/* eslint-disable-next-line jsx-a11y/scope */}
       <td scope="row">{lineIndex + 1}</td>
-      <td><a href={`/products/${item.id}`}>{item.title}</a></td>
+      <td><Link to={`/products/${item.id}`}>{item.title}</Link></td>
       <td>{selectedSize}</td>
       <td>{selectedQuantity}</td>
       <td>{`${item.price} руб.`}</td>

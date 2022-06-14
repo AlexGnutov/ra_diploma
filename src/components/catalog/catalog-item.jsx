@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 function CatalogItem(props) {
   const {
@@ -16,7 +17,7 @@ function CatalogItem(props) {
           {' '}
           руб.
         </p>
-        <a href={`/products/${id}`} className="btn btn-outline-primary">Заказать</a>
+        <Link to={`/products/${id}`} className="btn btn-outline-primary">Заказать</Link>
       </div>
     </div>
   );

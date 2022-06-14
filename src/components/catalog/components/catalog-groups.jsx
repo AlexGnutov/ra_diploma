@@ -19,45 +19,41 @@ function CatalogGroups() {
     dispatch(getAction('catalog/setCatGroup', { activeGroup: groupId }));
   };
 
-  if (loading || error) {
+  if (loading || error || groups.length === 0) {
     return null;
   }
 
   return (
-    (groups.length > 0)
-      ? (
-        <ul className="catalog-categories nav justify-content-center">
-          <li className="nav-item" key="$">
-            <a
-              className={activeGroup === null ? 'nav-link active' : 'nav-link'}
-              role="button"
-              href="#0"
-              onClick={(e) => {
-                e.preventDefault();
-                setCatalogueGroup(null);
-              }}
-            >
-              Все
-            </a>
-          </li>
+    <ul className="catalog-categories nav justify-content-center">
+      <li className="nav-item" key="$">
+        <a
+          className={activeGroup === null ? 'nav-link active' : 'nav-link'}
+          role="button"
+          href="#0"
+          onClick={(e) => {
+            e.preventDefault();
+            setCatalogueGroup(null);
+          }}
+        >
+          Все
+        </a>
+      </li>
 
-          {groups.map((group) => (
-            <li className="nav-item" key={group.id}>
-              <a
-                className={activeGroup === group.id ? 'nav-link active' : 'nav-link'}
-                href="#0"
-                onClick={(e) => {
-                  e.preventDefault();
-                  setCatalogueGroup(group.id);
-                }}
-              >
-                {group.title}
-              </a>
-            </li>
-          ))}
-        </ul>
-      ) : null
-
+      {groups.map((group) => (
+        <li className="nav-item" key={group.id}>
+          <a
+            className={activeGroup === group.id ? 'nav-link active' : 'nav-link'}
+            href="#0"
+            onClick={(e) => {
+              e.preventDefault();
+              setCatalogueGroup(group.id);
+            }}
+          >
+            {group.title}
+          </a>
+        </li>
+      ))}
+    </ul>
   );
 }
 

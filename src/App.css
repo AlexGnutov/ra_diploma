@@ -310,3 +310,23 @@ h2, .h2 {
   background-color: #727e86;
   border-color: #727e86;
 }
+
+
+/* Popup - added by student */
+.popup-container {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 5;
+}
+.popup-content {
+  width: 300px;
+  padding: 10px 20px 20px;
+  background-color: white;
+}
