@@ -9,6 +9,7 @@ import {
   loadMoreItemsEpic,
   sendOrderDataEpic,
   sendOrderOkEpic,
+  loadNewItemsErrorEpic,
 } from './epics';
 import salesHitsReducer from './slices/sales-hits-slice';
 import catalogReducer from './slices/catalog-slice';
@@ -42,10 +43,11 @@ listenerMiddleware.startListening({
 const epic = combineEpics(
   loadSalesHitsEpic,
   loadNewItemsEpic,
+  loadMoreItemsEpic,
+  loadNewItemsErrorEpic,
   loadCatGroupsEpic,
   loadProductDetailsEpic,
   switchCategoryEpic,
-  loadMoreItemsEpic,
   sendOrderDataEpic,
   sendOrderOkEpic,
 );

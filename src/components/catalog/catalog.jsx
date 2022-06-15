@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { v4 } from 'uuid';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import CatalogSearch from './components/catalog-search';
 import CatalogGroups from './components/catalog-groups';
 import LoadingSpinner from '../messages/loading-spinner';
@@ -19,7 +20,7 @@ function Catalog(props) {
     dispatch(loadNewItemsReq());
   }, [dispatch]);
 
-  const loadMoreHandler = () => {
+  const loadMore = () => {
     if (!complete) {
       dispatch(loadMoreItemsReq());
     }
@@ -38,7 +39,11 @@ function Catalog(props) {
     return (
       <section className="catalog">
         <h2 className="text-center">Каталог</h2>
-        ERROR
+        <p className="text-center">
+          Каталог товаров временно недоступен. Попробуйте
+          <Link to="/" reloadDocument> перезагрузить страницу</Link>
+          .
+        </p>
       </section>
     );
   }
@@ -58,7 +63,7 @@ function Catalog(props) {
       {!complete
         ? (
           <div className="text-center">
-            <button type="button" className="btn btn-outline-primary" onClick={loadMoreHandler}>Загрузить ещё</button>
+            <button type="button" className="btn btn-outline-primary" onClick={loadMore}>Загрузить ещё</button>
           </div>
         )
         : null}

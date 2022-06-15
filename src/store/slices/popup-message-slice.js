@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { standardMessages } from '../../components/messages/standard-messages';
 
 const initialState = {
   headerText: '',
@@ -7,19 +8,6 @@ const initialState = {
   active: false,
   redirect: false,
   path: '',
-};
-
-const standardMessages = {
-  orderSendingError: {
-    headerText: 'Произошла ошибка',
-    messageText: 'К сожалению, не удалось отправить заказ. Попробуйте повторить отправку позднее.',
-    buttonText: 'Закрыть',
-  },
-  orderSendingSuccess: {
-    headerText: 'Отлично!',
-    messageText: 'Заказ успешно отправлен и в ближайшее время будет обработан менеджером.',
-    buttonText: 'Закрыть',
-  },
 };
 
 export const popupMessageSlice = createSlice({

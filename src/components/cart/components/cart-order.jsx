@@ -4,7 +4,12 @@ import { getAction } from '../../../store/epics';
 import LoadingSpinner from '../../messages/loading-spinner';
 
 function CartOrder() {
-  const { phone, address, agreement, loading } = useSelector((state) => state.cartOrder);
+  const {
+    phone,
+    address,
+    agreement,
+    loading,
+  } = useSelector((state) => state.cartOrder);
   const { goods } = useSelector((state) => state.cart);
   const [isValid, setValid] = useState({
     formValid: false,

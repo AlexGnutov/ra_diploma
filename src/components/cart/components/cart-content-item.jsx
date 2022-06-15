@@ -10,7 +10,7 @@ function CartContentItem(props) {
   } = props;
   const dispatch = useDispatch();
 
-  const removeItemHandler = () => {
+  const removeItem = () => {
     dispatch(getAction('cart/removeItemFromCart', { id: item.id }));
   };
 
@@ -26,7 +26,7 @@ function CartContentItem(props) {
       <td>
         <button
           type="button"
-          onClick={removeItemHandler}
+          onClick={removeItem}
           className="btn btn-outline-danger btn-sm"
         >
           Удалить

@@ -1,10 +1,10 @@
-import history from 'history/browser';
 import {
-  catchError, filter, map, mergeMap, of, switchMap,
+  catchError, filter, map, of, switchMap,
 } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
 import { loadSalesHitsReq } from '../slices/sales-hits-slice';
 import {
+  loadItemsErr,
   loadMoreItemsReq,
   loadNewItemsReq,
   setCatGroup,
@@ -12,7 +12,6 @@ import {
 import { loadCatGroupsReq } from '../slices/catalog-groups-slice';
 import { loadProdDataReq } from '../slices/product-details-slice';
 import { sendOrderOk, sendOrderReq } from '../slices/cart-order-slice';
-import { hidePopupMessage } from '../slices/popup-message-slice';
 
 export const getAction = (type, payload) => ({ type, payload });
 
@@ -54,6 +53,15 @@ export const loadMoreItemsEpic = (action$, state$) => action$.pipe(
       map((r) => getAction('catalog/loadMoreItemsOk', { items: r })),
       catchError((e) => of(getAction('catalog/loadItemsErr', { message: e.message }))),
     )),
+);
+
+// Shows popup, when catalog data can't be loaded (loadNew and loadMore)
+export const loadNewItemsErrorEpic = (action$) => action$.pipe(
+  filter(loadItemsErr.match),
+  map(() => getAction(
+    'popup-message/showPopupMessage',
+    { messageName: 'itemsLoadingError' },
+  )),
 );
 
 // Loading catalogue groups - main page and catalog page
@@ -104,13 +112,13 @@ export const sendOrderOkEpic = (action$) => action$.pipe(
   filter(sendOrderOk.match),
   switchMap(() => of(
     getAction('cart/clearCart'),
-    getAction(
-      'popup-message/showPopupMessage',
-      { messageName: 'orderSendingSuccess' },
-    ),
     getAction('popup-message/startRedirect', {
       redirect: true,
       path: '/catalog.html',
     }),
+    getAction(
+      'popup-message/showPopupMessage',
+      { messageName: 'orderSendingSuccess' },
+    ),
   )),
 );

@@ -10,14 +10,11 @@ export const salesHitsSlice = createSlice({
   name: 'sales-hits',
   initialState,
   reducers: {
-    loadSalesHitsReq: (state) => {
-      console.log('load sales hits');
-      return {
-        ...state,
-        loading: true,
-        error: null,
-      };
-    },
+    loadSalesHitsReq: (state) => ({
+      ...state,
+      loading: true,
+      error: null,
+    }),
     loadSalesHitsErr: () => (
       { ...initialState, loading: false, error: true }
     ),

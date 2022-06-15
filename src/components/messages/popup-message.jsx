@@ -28,6 +28,8 @@ function PopupMessage() {
           type="button"
           className="btn btn-outline-secondary"
           onClick={closePopup}
+          /* eslint-disable-next-line jsx-a11y/no-autofocus */
+          autoFocus
         >
           {buttonText}
         </button>

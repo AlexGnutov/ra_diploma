@@ -9,7 +9,7 @@ export default function SizeSelector(props) {
   const { availableSizes } = props;
   const dispatch = useDispatch();
 
-  const sizeClickHandler = (size) => {
+  const sizeSelect = (size) => {
     dispatch(getAction('productDetails/sizeSelect', { size }));
   };
 
@@ -23,7 +23,7 @@ export default function SizeSelector(props) {
               <span
                 className={data.size === selectedSize
                   ? 'catalog-item-size selected' : 'catalog-item-size'}
-                onClick={() => sizeClickHandler(data.size)}
+                onClick={() => sizeSelect(data.size)}
                 onKeyDown={() => {}}
                 key={v4()}
                 role="button"
