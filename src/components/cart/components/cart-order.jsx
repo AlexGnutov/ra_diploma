@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { IMaskInput } from 'react-imask';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAction } from '../../../store/epics';
 import LoadingSpinner from '../../messages/loading-spinner';
@@ -15,11 +16,9 @@ function CartOrder() {
     formValid: false,
     phoneValid: false,
   });
-
   const dispatch = useDispatch();
 
-  const updateValue = (e) => {
-    const { name, value } = e.target;
+  const updateValue = (value, name) => {
     dispatch(getAction('cart-order/updateOrderData', { name, value }));
   };
   const setAgreement = (e) => {
@@ -47,7 +46,8 @@ function CartOrder() {
     dispatch(getAction('cart-order/sendOrderReq', { orderData }));
   };
 
-  const validatePhone = (value) => (value.match(/^[0-9]{3}-[0-9]{3}-[0-9]{2}-[0-9]{2}$/));
+  const validatePhone = (value) => (value.match(/^[0-9]{11}$/));
+
   useEffect(() => {
     if (!validatePhone(phone)) {
       setValid((prev) => ({ ...prev, formValid: false, phoneValid: false }));
@@ -75,17 +75,19 @@ function CartOrder() {
           <div className="form-group">
             {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
             <label htmlFor="tel">Телефон</label>
-            <input
-              type="text"
+            <IMaskInput
+              mask="+{7} (000) 000-00-00"
               className="form-control"
               name="phone"
               id="tel"
+              unmask
               value={phone}
-              placeholder="Ваш телефон"
-              onChange={updateValue}
+              // placeholder="Ваш телефон"
+              lazy={false}
+              onAccept={(value) => updateValue(value, 'phone')}
             />
             {
-              isValid.phoneValid ? null : <p>Введите номер в формате XXX-XXX-XX-XX</p>
+              isValid.phoneValid ? null : <p>Пожалуйста, введите номер телефона</p>
             }
           </div>
           <div className="form-group">
@@ -97,7 +99,7 @@ function CartOrder() {
               name="address"
               value={address}
               placeholder="Адрес доставки"
-              onChange={updateValue}
+              onChange={(e) => updateValue(e.target.value, 'address')}
             />
           </div>
           <div className="form-group form-check">

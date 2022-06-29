@@ -40,7 +40,7 @@ function CartContent() {
           <tr>
             <td colSpan="5" className="text-right">Общая стоимость</td>
             <td>
-              { goods.length > 0 ? calcTotal(goods) : 0 }
+              { calcTotal(goods) }
               {' '}
               руб.
             </td>
