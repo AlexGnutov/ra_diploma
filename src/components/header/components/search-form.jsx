@@ -10,11 +10,11 @@ function SearchForm(props) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const changeSearchWordHandler = (e) => {
+  const setSearchWord = (e) => {
     dispatch(getAction('catalog-search/setSearchWord', { searchWord: e.target.value }));
   };
 
-  const formSubmitHandler = (e) => {
+  const submitSearch = (e) => {
     e.preventDefault();
     dispatch(hideSearchInput());
     navigate('/catalog.html');
@@ -22,7 +22,7 @@ function SearchForm(props) {
 
   return (
     <form
-      onSubmit={formSubmitHandler}
+      onSubmit={submitSearch}
       data-id="search-form"
       className={visible
         ? 'header-controls-search-form form-inline'
@@ -31,7 +31,7 @@ function SearchForm(props) {
       <input
         type="text"
         className="form-control"
-        onChange={changeSearchWordHandler}
+        onChange={setSearchWord}
         placeholder="Поиск"
         value={searchWord}
       />

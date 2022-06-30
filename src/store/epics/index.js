@@ -4,12 +4,14 @@ import {
 import { ajax } from 'rxjs/ajax';
 import { loadSalesHitsReq } from '../slices/sales-hits-slice';
 import {
+  loadItemsErr,
   loadMoreItemsReq,
   loadNewItemsReq,
   setCatGroup,
 } from '../slices/catalog-slice';
 import { loadCatGroupsReq } from '../slices/catalog-groups-slice';
 import { loadProdDataReq } from '../slices/product-details-slice';
+import { sendOrderOk, sendOrderReq } from '../slices/cart-order-slice';
 
 export const getAction = (type, payload) => ({ type, payload });
 
@@ -53,6 +55,15 @@ export const loadMoreItemsEpic = (action$, state$) => action$.pipe(
     )),
 );
 
+// Shows popup, when catalog data can't be loaded (loadNew and loadMore)
+export const loadNewItemsErrorEpic = (action$) => action$.pipe(
+  filter(loadItemsErr.match),
+  map(() => getAction(
+    'popup-message/showPopupMessage',
+    { messageName: 'itemsLoadingError' },
+  )),
+);
+
 // Loading catalogue groups - main page and catalog page
 export const loadCatGroupsEpic = (action$) => action$.pipe(
   filter(loadCatGroupsReq.match),
@@ -77,4 +88,37 @@ export const switchCategoryEpic = (action$) => action$.pipe(
   filter(setCatGroup.match),
   map((o) => o.payload.activeGroup),
   map(() => getAction('catalog/loadNewItemsReq')),
+);
+
+// Sending order data
+export const sendOrderDataEpic = (action$) => action$.pipe(
+  filter(sendOrderReq.match),
+  map((o) => o.payload.orderData),
+  switchMap((data) => ajax.post(`${process.env.REACT_APP_API_URL}order`, data).pipe(
+    map(() => getAction('cart-order/sendOrderOk')),
+    catchError(() => of(
+      getAction(
+        'popup-message/showPopupMessage',
+        { messageName: 'orderSendingError' },
+      ),
+      getAction(
+        'cart-order/sendOrderErr',
+      ),
+    )),
+  )),
+);
+
+export const sendOrderOkEpic = (action$) => action$.pipe(
+  filter(sendOrderOk.match),
+  switchMap(() => of(
+    getAction('cart/clearCart'),
+    getAction('popup-message/startRedirect', {
+      redirect: true,
+      path: '/catalog.html',
+    }),
+    getAction(
+      'popup-message/showPopupMessage',
+      { messageName: 'orderSendingSuccess' },
+    ),
+  )),
 );

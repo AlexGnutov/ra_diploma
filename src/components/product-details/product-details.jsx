@@ -1,5 +1,10 @@
 import React, { useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import {
+  Link,
+  useLocation,
+  useNavigate,
+  useParams,
+} from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import LoadingSpinner from '../messages/loading-spinner';
 import SizeSelector from './components/size-selector';
@@ -21,6 +26,7 @@ function ProductDetails() {
   const { productId } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const availableSizes = sizes.filter((size) => size.avalible);
 
@@ -36,6 +42,7 @@ function ProductDetails() {
   if (loading) {
     return (
       <section className="catalog-item">
+        <h2> </h2>
         <LoadingSpinner />
       </section>
     );
@@ -44,7 +51,12 @@ function ProductDetails() {
   if (error) {
     return (
       <section className="catalog-item">
-        ERROR
+        <h2> </h2>
+        <p className="text-center">
+          Не удалось загрузить данные товара. Попробуйте
+          <Link to={location} reloadDocument> перезагрузить страницу</Link>
+          .
+        </p>
       </section>
     );
   }

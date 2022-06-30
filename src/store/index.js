@@ -7,15 +7,19 @@ import {
   loadSalesHitsEpic,
   switchCategoryEpic,
   loadMoreItemsEpic,
+  sendOrderDataEpic,
+  sendOrderOkEpic,
+  loadNewItemsErrorEpic,
 } from './epics';
 import salesHitsReducer from './slices/sales-hits-slice';
 import catalogReducer from './slices/catalog-slice';
-import cartReducer, { addItemToCart, removeItemFromCart } from './slices/cart-slice';
+import cartReducer, { addItemToCart, removeItemFromCart, clearCart } from './slices/cart-slice';
 import catalogGroupsReducer from './slices/catalog-groups-slice';
 import productDetailsReducer from './slices/product-details-slice';
 import { loadStateFromLocalStorage, saveStateToLocal } from './state-saving/utils';
 import catalogSearchReducer, { setSearchWord } from './slices/catalog-search-slice';
 import cartOrderReducer, { updateOrderData } from './slices/cart-order-slice';
+import popupMessageReducer from './slices/popup-message-slice';
 
 // const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -27,6 +31,7 @@ listenerMiddleware.startListening({
     removeItemFromCart,
     setSearchWord,
     updateOrderData,
+    clearCart,
   ),
   effect: (action, listenerApi) => {
     const state = listenerApi.getState();
@@ -38,10 +43,13 @@ listenerMiddleware.startListening({
 const epic = combineEpics(
   loadSalesHitsEpic,
   loadNewItemsEpic,
+  loadMoreItemsEpic,
+  loadNewItemsErrorEpic,
   loadCatGroupsEpic,
   loadProductDetailsEpic,
   switchCategoryEpic,
-  loadMoreItemsEpic,
+  sendOrderDataEpic,
+  sendOrderOkEpic,
 );
 const epicMiddleware = createEpicMiddleware();
 
@@ -56,6 +64,7 @@ const store = configureStore({
     productDetails: productDetailsReducer,
     catalogSearch: catalogSearchReducer,
     cartOrder: cartOrderReducer,
+    popupMessage: popupMessageReducer,
   },
   middleware: [epicMiddleware, listenerMiddleware.middleware],
   preloadedState,

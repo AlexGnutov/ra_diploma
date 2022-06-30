@@ -1,19 +1,20 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 function NavMenu() {
   return (
     <ul className="navbar-nav mr-auto">
       <li className="nav-item active">
-        <a className="nav-link" href="/">Главная</a>
+        <Link className="nav-link" to="/">Главная</Link>
       </li>
       <li className="nav-item">
-        <a className="nav-link" href="/catalog.html">Каталог</a>
+        <Link className="nav-link" to="/catalog.html">Каталог</Link>
       </li>
       <li className="nav-item">
-        <a className="nav-link" href="/about.html">О магазине</a>
+        <Link className="nav-link" to="/about.html">О магазине</Link>
       </li>
       <li className="nav-item">
-        <a className="nav-link" href="/contacts.html">Контакты</a>
+        <Link className="nav-link" to="/contacts.html">Контакты</Link>
       </li>
     </ul>
   );

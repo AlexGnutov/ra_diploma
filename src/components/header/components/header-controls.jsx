@@ -11,11 +11,11 @@ function HeaderControls() {
 
   const navigate = useNavigate();
 
-  const cartClickHandler = () => {
+  const openCart = () => {
     navigate('/cart.html');
   };
 
-  const searchExpanderHandler = () => {
+  const toggleSearch = () => {
     if (!inputVisible) {
       dispatch(showSearchInput());
       return;
@@ -35,14 +35,14 @@ function HeaderControls() {
         <div
           data-id="search-expander"
           className="header-controls-pic header-controls-search"
-          onClick={searchExpanderHandler}
+          onClick={toggleSearch}
           onKeyDown={() => {}}
           role="button"
           tabIndex={0}
         />
         <div
           className="header-controls-pic header-controls-cart"
-          onClick={cartClickHandler}
+          onClick={openCart}
           onKeyDown={() => {}}
           role="button"
           tabIndex={0}

@@ -8,14 +8,14 @@ function CatalogSearch() {
   const dispatch = useDispatch();
   const inputRef = useRef();
 
-  const changeSearchWordHandler = (e) => {
+  const changeSearchWord = (e) => {
     dispatch(getAction('catalog-search/setSearchWord', { searchWord: e.target.value }));
     if (e.target.value === '') {
       dispatch(loadNewItemsReq());
     }
   };
 
-  const searchFromSubmitHandler = (e) => {
+  const searchFormSubmit = (e) => {
     e.preventDefault();
     dispatch(loadNewItemsReq());
   };
@@ -27,11 +27,11 @@ function CatalogSearch() {
   return (
     <form
       className="catalog-search-form form-inline"
-      onSubmit={searchFromSubmitHandler}
+      onSubmit={searchFormSubmit}
     >
       <input
         className="form-control"
-        onChange={changeSearchWordHandler}
+        onChange={changeSearchWord}
         placeholder="Поиск"
         value={searchWord}
         ref={inputRef}

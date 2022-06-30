@@ -5,8 +5,9 @@ import {
   BrowserRouter, Routes, Route, Navigate,
 } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import App from './App';
+// eslint-disable-next-line import/no-named-as-default,import/no-named-as-default-member
 import reportWebVitals from './reportWebVitals';
+import App from './App';
 import About from './components/about/about';
 import Catalog from './components/catalog/catalog';
 import Preview from './components/preview/preview';
@@ -16,11 +17,11 @@ import Cart from './components/cart/cart';
 import Page404 from './components/page-404/page-404';
 import store from './store';
 
+// eslint-disable-next-line no-undef
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   // eslint-disable-next-line react/jsx-filename-extension
   <Provider store={store}>
-    {console.log('Render all: ', store.getState())}
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />}>
